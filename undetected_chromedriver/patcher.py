@@ -13,6 +13,7 @@ import time
 from urllib.request import urlopen
 from urllib.request import urlretrieve
 import zipfile
+import shutil
 
 
 logger = logging.getLogger(__name__)
@@ -179,7 +180,7 @@ class Patcher(object):
             zf.extract(self.exe_name, self.zip_path)
         os.rename(os.path.join(self.zip_path, self.exe_name), self.executable_path)
         os.remove(fp)
-        os.rmdir(self.zip_path)
+        shutil.rmtree(self.zip_path, ignore_errors=True)
         os.chmod(self.executable_path, 0o755)
         return self.executable_path
 
